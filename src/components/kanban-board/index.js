@@ -7,12 +7,21 @@ export default class KanbanBoard extends Component {
     // Each task is uniquely identified by its name. 
     // Therefore, when you perform any operation on tasks, make sure you pick tasks by names (primary key) instead of any kind of index or any other attribute.
     this.state = {
+      currentInput: "",
       tasks: [
             { name: '1', stage: 0 },
             { name: '2', stage: 0 },
         ]
     };
     this.stagesNames = ['Backlog', 'To Do', 'Ongoing', 'Done'];
+  }
+
+  // function to handle create new task button click
+  handleCreateTaskButtonClick(){
+    if (this.state.currentInput.length === 0) return;
+    const newTask = {name: this.state.currentInput, stage: 0};
+    const newList = [...this.state.tasks, newTask];
+    return this.setState({tasks: newList});
   }
 
   render() {
@@ -30,8 +39,8 @@ export default class KanbanBoard extends Component {
     return (
       <div className="mt-20 layout-column justify-content-center align-items-center">
         <section className="mt-50 layout-row align-items-center justify-content-center">
-          <input id="create-task-input" type="text" className="large" placeholder="New task name" data-testid="create-task-input"/>
-          <button type="submit" className="ml-30" data-testid="create-task-button">Create task</button>
+          <input onInput={(e) => this.setState({currentInput: e.target.value})} id="create-task-input" type="text" className="large" placeholder="New task name" data-testid="create-task-input"/>
+          <button onClick={() => this.handleCreateTaskButtonClick()} type="submit" className="ml-30" data-testid="create-task-button">Create task</button>
         </section>
 
         <div className="mt-50 layout-row">
