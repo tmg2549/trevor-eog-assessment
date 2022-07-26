@@ -25,11 +25,11 @@ export default class KanbanBoard extends Component {
   }
 
   handleForwardClick(name){
-    console.log("forward handled!")
     const newList = this.state.tasks.map((task) => {
       if (task.name === name){
         if (task.stage !== 3) task.stage++;
       }
+      return task;
     })
     return this.setState({tasks: newList});
   }
