@@ -34,6 +34,16 @@ export default class KanbanBoard extends Component {
     return this.setState({tasks: newList});
   }
 
+  handleBackClick(name){
+    const newList = this.state.tasks.map((task) => {
+      if (task.name === name){
+        if (task.stage !== 0) task.stage--;
+      }
+      return task;
+    })
+    return this.setState({tasks: newList});
+  }
+
   render() {
     const { tasks } = this.state;
 
@@ -65,7 +75,7 @@ export default class KanbanBoard extends Component {
                                       <div className="li-content layout-row justify-content-between align-items-center">
                                         <span data-testid={`${task.name.split(' ').join('-')}-name`}>{task.name}</span>
                                         <div className="icons">
-                                          <button  disabled={task.stage === 0} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
+                                          <button onClick={() => this.handleBackClick(task.name)} disabled={task.stage === 0} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
                                             <i className="material-icons">arrow_back</i>
                                           </button>
                                           <button onClick={() => this.handleForwardClick(task.name)} disabled={task.stage === 3} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
