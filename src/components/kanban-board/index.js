@@ -16,12 +16,12 @@ export default class KanbanBoard extends Component {
     this.stagesNames = ['Backlog', 'To Do', 'Ongoing', 'Done'];
   }
 
-  // function to handle create new task button click
+  // function to handle create new task button click and create new task at stage 0
   handleCreateTaskButtonClick(){
     if (this.state.currentInput.length === 0) return;
     const newTask = {name: this.state.currentInput, stage: 0};
     const newList = [...this.state.tasks, newTask];
-    return this.setState({tasks: newList});
+    return this.setState({currentInput: "", tasks: newList});
   }
 
   render() {
@@ -39,7 +39,7 @@ export default class KanbanBoard extends Component {
     return (
       <div className="mt-20 layout-column justify-content-center align-items-center">
         <section className="mt-50 layout-row align-items-center justify-content-center">
-          <input onInput={(e) => this.setState({currentInput: e.target.value})} id="create-task-input" type="text" className="large" placeholder="New task name" data-testid="create-task-input"/>
+          <input value={this.state.currentInput} onChange={(e) => this.setState({currentInput: e.target.value})} id="create-task-input" type="text" className="large" placeholder="New task name" data-testid="create-task-input"/>
           <button onClick={() => this.handleCreateTaskButtonClick()} type="submit" className="ml-30" data-testid="create-task-button">Create task</button>
         </section>
 
