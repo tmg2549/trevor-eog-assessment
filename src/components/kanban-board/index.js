@@ -24,6 +24,16 @@ export default class KanbanBoard extends Component {
     return this.setState({currentInput: "", tasks: newList});
   }
 
+  handleForwardClick(name){
+    console.log("forward handled!")
+    const newList = this.state.tasks.map((task) => {
+      if (task.name === name){
+        if (task.stage !== 3) task.stage++;
+      }
+    })
+    return this.setState({tasks: newList});
+  }
+
   render() {
     const { tasks } = this.state;
 
@@ -55,10 +65,10 @@ export default class KanbanBoard extends Component {
                                       <div className="li-content layout-row justify-content-between align-items-center">
                                         <span data-testid={`${task.name.split(' ').join('-')}-name`}>{task.name}</span>
                                         <div className="icons">
-                                          <button className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
+                                          <button  disabled={task.stage === 0} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-back`}>
                                             <i className="material-icons">arrow_back</i>
                                           </button>
-                                          <button className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
+                                          <button onClick={() => this.handleForwardClick(task.name)} disabled={task.stage === 3} className="icon-only x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-forward`}>
                                             <i className="material-icons">arrow_forward</i>
                                           </button>
                                           <button className="icon-only danger x-small mx-2" data-testid={`${task.name.split(' ').join('-')}-delete`}>
